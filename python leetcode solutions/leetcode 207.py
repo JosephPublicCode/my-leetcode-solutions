@@ -62,12 +62,10 @@ method:
 class Solution: 
     def canFinish(self, numCourses: int, prerequisites: list[list[int]]) -> bool:
 
-        graph = defaultdict(list)
+        graph = { c:[] for c in range(numCourses)}
         # create an adjacency list
         for u,v in prerequisites: 
             graph[u].append(v)
-            if v not in graph: 
-                graph[v] = []
         
 
         visit = set() 
@@ -85,8 +83,9 @@ class Solution:
                 if not dfs(neighbor): 
                     return False
             visit.remove(node)
-            visit[node] = []
+            graph[node] = []
             return True
+        # O(V + E) for the helper function
         
         # check all nodes in the graph
         for node in graph: 
